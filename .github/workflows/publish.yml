@@ -34,18 +34,13 @@ jobs:
     - name: Deploy Azure
       uses: azure/CLI@v1
       with:
-        azcliversion: 2.47.0
+        azcliversion: 2.50.0
         inlineScript: |
-          az bicep install
-
           OUTPUT=$(az deployment group create \
             --resource-group blog \
             --name blog-deploy \
+            --parameters-file deploy/main.bicepparam \
             --template-file deploy/main.bicep \
-            --parameters \
-                domainName=ant.ninja \
-                subDomainName=blog \
-                dnsResourceGroup=dns \
             --query "[properties.outputs.stgAccName.value]" \
             --output tsv)
           

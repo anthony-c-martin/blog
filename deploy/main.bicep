@@ -14,7 +14,7 @@ var fullSubDomainName = '${subDomainName}.${domainName}'
 
 resource storage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: '${subDomainName}${uniqueString(resourceGroup().id)}'
-    location: location
+  location: location
   kind: 'StorageV2'
   sku: {
     name: 'Standard_LRS'
@@ -36,7 +36,7 @@ resource cdnProfile 'Microsoft.Cdn/profiles@2021-06-01' = {
   }
 }
 
-resource cdnEnpoint 'Microsoft.Cdn/profiles/endpoints@2021-06-01' = {
+resource cdnEndpoint 'Microsoft.Cdn/profiles/endpoints@2021-06-01' = {
   parent: cdnProfile
   name: replace(fullSubDomainName, '.', '-')
   location: 'global'
@@ -139,15 +139,15 @@ module dns 'dns.bicep' = {
   name: 'dns'
   scope: resourceGroup(dnsResourceGroup)
   params: {
-    cdnEndpointFqdn: cdnEnpoint.properties.hostName
-    cdnEndpointId: cdnEnpoint.id
+    cdnEndpointFqdn: cdnEndpoint.properties.hostName
+    cdnEndpointId: cdnEndpoint.id
     domainName: domainName
     subDomainName: subDomainName
   }
 }
 
 resource cdnDomain 'Microsoft.Cdn/profiles/endpoints/customDomains@2021-06-01' = {
-  parent: cdnEnpoint
+  parent: cdnEndpoint
   name: replace(fullSubDomainName, '.', '-')
   properties: {
     hostName: fullSubDomainName
@@ -161,7 +161,7 @@ module enableHttps 'cdn-https.bicep' = {
   name: 'cdn-https'
   params: {
     cdnCustomDomainName: cdnDomain.name
-    cdnEndpointName: cdnEnpoint.name
+    cdnEndpointName: cdnEndpoint.name
     cdnProfileName: cdnProfile.name
     location: location
   }

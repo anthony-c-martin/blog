@@ -1,3 +1,1 @@
-- Automating a Gatsby blog
-- Initial setup script with OIDC
 - CI/CD with Bicep
