@@ -305,15 +305,16 @@ jobs:
         npm ci
         npm run build
 
-    - name: Deploy Azure
+    - name: Deploy
       uses: azure/CLI@v1
       with:
-        azcliversion: 2.50.0
         inlineScript: |
+          az bicep install
+
           OUTPUT=$(az deployment group create \
             --resource-group blog \
             --name blog-deploy \
-            --parameters-file deploy/main.bicepparam \
+            --parameters deploy/main.bicepparam \
             --template-file deploy/main.bicep \
             --query "[properties.outputs.stgAccName.value]" \
             --output tsv)
