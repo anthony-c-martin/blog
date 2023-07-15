@@ -15,7 +15,7 @@ module.exports = {
       summary: `- some guy.`,
     },
     description: `My personal blog.`,
-    siteUrl: `https://recipesq6ccvacpi7i3a.z20.web.core.windows.net/`,
+    siteUrl: `https://blog.ant.ninja`,
     social: { },
   },
   plugins: [
@@ -117,5 +117,6 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    `gatsby-plugin-sitemap`,
   ],
 }
