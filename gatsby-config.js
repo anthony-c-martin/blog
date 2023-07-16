@@ -12,7 +12,7 @@ module.exports = {
     title: `Ant's Blog`,
     author: {
       name: `Anthony Martin`,
-      summary: `- some guy.`,
+      summary: `- Engineering Manager at Microsoft Azure`,
     },
     description: `My personal blog.`,
     siteUrl: `https://blog.ant.ninja`,
